@@ -4,6 +4,7 @@
 
 const offset = 0
 const limit = 12
+//https://pokeapi.co/api/v2/pokemon?offset=0&limit=12
 const url = 'https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}'
 
 //a api funciona com IO
