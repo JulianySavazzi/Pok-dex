@@ -5,7 +5,7 @@
 const offset = 0
 const limit = 12
 //https://pokeapi.co/api/v2/pokemon?offset=0&limit=12
-const url = 'https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}'
+const url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`
 
 //a api funciona com IO
 //o fetch(url) faz um request e trara um promise da api (é uma promessa de um response)
@@ -17,4 +17,8 @@ fetch(url).then(
     function(response){
         console.log(response)
     }
-)
+).catch(function (error){
+    console.error(error)
+}).finally(function (){
+    console.log('Requisição concluída!')
+})
