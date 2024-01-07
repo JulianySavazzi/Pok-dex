@@ -17,13 +17,12 @@ const url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`
 fetch(url).then(
     //por padrao o fetch usa o method GET para requisiçoes
     function(response){
-        //converter response body para JSON
-        response.json().then(
-            function (responseBody){
-                console.log(responseBody)
-            }
-        )
-        console.log(response)
+        //converter promisse -> response body para JSON
+        return response.json()
+    }
+).then(
+    function(responseBody){
+        console.log(responseBody)
     }
 ).catch(function (error){
     console.error(error)
