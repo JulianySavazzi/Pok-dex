@@ -13,19 +13,15 @@ const url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`
 //metodo then -> quando termina de executar/processar a requisicao, esse methodo de callback retorna a resposta do servidor
 //o fetch faz o processamento da requisiçao e a funcao de callback passada no metodo then traz a resposta do servidor
 //podemos encadear varios then em uma promisse
+//arrow function (=>) -> substitui a function para simplificar o codigo (muito usada em callbacks)
+//por padrao o fetch usa o method GET para requisiçoes
 
-fetch(url).then(
-    //por padrao o fetch usa o method GET para requisiçoes
-    function(response){
-        //converter promisse -> response body para JSON
-        return response.json()
-    }
-).then(
-    function(responseBody){
-        console.log(responseBody)
-    }
-).catch(function (error){
-    console.error(error)
-}).finally(function (){
-    console.log('Requisição concluída!')
-})
+fetch(url)
+//encadeamento de then para callback, com arrow functions, simplificando o codigo
+//converter promisse -> response body para JSON
+    .then((response) => response.json())
+    .then((responseBody) => console.log(responseBody))
+    .catch((error) => console.error(error))
+    .finally(() => console.log('Requisição concluída!'))
+
+    
