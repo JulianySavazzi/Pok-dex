@@ -22,15 +22,22 @@ function convertPokemonToHtml(pokemon){
 //usando o objeto pokeApi para manipular a API response
 pokeApi.getPokemons()
     .then((pokemonList) => {
+
+        //separando os elementos da lista do codigo HTML
+        const listItems = []
+
+        //map -> transforma um elemento em outro elemento por meio de uma funcao de transformacao
+        
+
         for (let i = 0; i < pokemonList.length; i++) {
             const element = pokemonList[i]
             // console.log(convertPokemonToHtml(element))
             //acessar janela -> window
             //document -> acessar documento HTML atual 
             //innerHTML -> concatenar o codigo html passado por string com a pagina
-            pokeApiList.innerHTML += convertPokemonToHtml(element)
+            // pokeApiList.innerHTML += convertPokemonToHtml(element) -> concatena cada elemento da lista, browse precisa recarregar a lista inteira varias vezes
             //é melhor concatenar tudo de uma vez, em vez de concatenar cada objeto da lista
-            
+            listItems.push(convertPokemonToHtml(element))
         }
     })
     .catch((error) => console.error(error))
