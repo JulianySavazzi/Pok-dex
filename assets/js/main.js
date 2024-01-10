@@ -20,18 +20,13 @@ function convertPokemonToHtml(pokemon){
 }
 
 //usando o objeto pokeApi para manipular a API response
-pokeApi.getPokemons()
-    .then((pokemonList = []) => {
+pokeApi.getPokemons().then((pokemonList = []) => {
+
+    //map -> transforma um elemento em outro elemento por meio de uma funcao de transformacao
+    pokeList.innerHTML += pokemonList.map(convertPokemonToHtml).join('')
 
         //separando os elementos da lista do codigo HTML
-        const listItems = []
-
-        //map -> transforma um elemento em outro elemento por meio de uma funcao de transformacao
-        const newList = pokemonList.map((item) => convertPokemonToHtml(item))
-
-        const newHtml = newList.join('')
-
-        pokemonList.innerHTML += newHtml
+        // const listItems = []
 
         // for (let i = 0; i < pokemonList.length; i++) {
         //     const element = pokemonList[i]
@@ -43,8 +38,8 @@ pokeApi.getPokemons()
         //     //é melhor concatenar tudo de uma vez, em vez de concatenar cada objeto da lista
         //     listItems.push(convertPokemonToHtml(element))
         // }
-    })
-    .catch((error) => console.error(error))
+})
+.catch((error) => console.error(error))
     //.finally(() => console.log('Requisição concluída!'))
 
     
