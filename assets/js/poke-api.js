@@ -15,9 +15,27 @@ const pokeApi = {}
 //arrow function (=>) -> substitui a function para simplificar o codigo (muito usada em callbacks)
 //por padrao o fetch usa o method GET para requisiçoes
 
-pokeApi.getPokemonDetail = (pokemonItem) => {
-    return fetch(pokemonItem.url).then((response) => response.json())
+function convertPokeApiDetailToModel(pokeDetail) {
+    //pegando os atributos da API e colocando na nossa model
+    const pokemon = new Pokemon()
+    pokemon.number = pokeDetail.order
+    pokemon.name = pokeDetail.name
 
+    const types = pokeDetail.types.map((typeSlot) => typeSlot.type.name)
+    const [type] = types
+    pokemon.types = types
+    pokemon.type = type
+
+    pokemon.photo = pokeDetail.sprites.other.dream_world.front_default
+
+    return pokemon
+}
+
+pokeApi.getPokemonDetail = (pokemonItem) => {
+    //usar a model para pegar os detalhes dos pokemons
+    return fetch(pokemonItem.url)
+            .then((response) => response.json())
+            .then(convertPokeApiDetailToModel)
 }
 
 //retornar a manipulaçao da API feita pelo fetch

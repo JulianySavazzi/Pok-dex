@@ -16,7 +16,7 @@ function convertPokemonToHtml(pokemon){
                 <ol class="types">
                     ${convertPokemonTypesToLi(pokemon.types).join('')}
                 </ol>
-                <img src="" 
+                <img src="${pokemon.sprites.other.dream_world.front_default}" 
                 alt="${pokemon.name}">
             </div>
         </li>
