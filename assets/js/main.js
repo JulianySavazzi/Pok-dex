@@ -2,9 +2,9 @@
 const pokeApiList = document.getElementById('pokeList')
 
 //converter pokemon type para <li>
-function  convertPokemonTypesToLi(pokemonTypes) {
-    return pokemonTypes.map((typeSlot) => `<li class="type">${typeSlot.type.name}</li>`)
-}
+//function  convertPokemonTypesToLi(pokemonTypes) {
+//    return pokemonTypes.map((typeSlot) => `<li class="type">${typeSlot.type.name}</li>`)
+//}
 
 //converter pokemon para HTML
 function convertPokemonToHtml(pokemon){
@@ -14,9 +14,9 @@ function convertPokemonToHtml(pokemon){
             <span class="name">${pokemon.name}</span>
             <div class="detail">
                 <ol class="types">
-                    ${convertPokemonTypesToLi(pokemon.types).join('')}
+                    ${pokemon.types.map((type) => `<li class="type">${type}</li>`).join('')}
                 </ol>
-                <img src="${pokemon.sprites.other.dream_world.front_default}" 
+                <img src="${pokemon.photo}"
                 alt="${pokemon.name}">
             </div>
         </li>
