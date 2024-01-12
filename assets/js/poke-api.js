@@ -6,10 +6,6 @@
 //criar obj JS
 const pokeApi = {}
 
-// const offset = 0
-// const limit = 12
-//https://pokeapi.co/api/v2/pokemon?offset=0&limit=12
-
 //a api funciona com IO
 //o fetch(url) faz um request e trara um promise da api (é uma promessa de um response)
 //a resposta do fetch nao é instantanea -> processamento assincrono (processamento paralelo, uma hora ele traz a resposta)
@@ -19,13 +15,31 @@ const pokeApi = {}
 //arrow function (=>) -> substitui a function para simplificar o codigo (muito usada em callbacks)
 //por padrao o fetch usa o method GET para requisiçoes
 
+pokeApi.getPokemonDetail = (pokemonItem) => {
+    return fetch(pokemonItem.url).then((response) => response.json())
+
+}
+
 //retornar a manipulaçao da API feita pelo fetch
 pokeApi.getPokemons = (offset = 0, limit = 12) => {
     const url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`
     return fetch(url)
     //encadeamento de then para callback, com arrow functions, simplificando o codigo
     //converter promisse -> response body para JSON
+    //vamos transformar a lista de pokemons em uma promise list com .map, para receber os detalhes dos pokemons
         .then((response) => response.json())
         .then((responseBody) => responseBody.results)
+        .then((pokemonsList) => pokemonsList.map(pokeApi.getPokemonDetail))
+        .then((detailRequests) => Promise.all(detailRequests))
+        .then((pokemonsDetails) => pokemonsDetails)
         .catch((error) => console.error(error))
 }
+
+//precisamos fazer a requisicao do detalhe de cada pokemon
+//Promise.all -> quando temos varias requisicoes (recebe um array de promisses)
+//manipular multiplas requisicoes em paralelo
+//Promise.all([
+//     //quando terminar a lista de promises
+//     //o then vai retornar a response de todas as promises
+//
+//])

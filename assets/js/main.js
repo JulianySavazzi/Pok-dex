@@ -1,18 +1,22 @@
 //pegar os pokemons vindos da api, e adicionar no <ol> pelo id
 const pokeApiList = document.getElementById('pokeList')
 
+//converter pokemon type para <li>
+function  convertPokemonTypesToLi(pokemonTypes) {
+    return pokemonTypes.map((typeSlot) => `<li class="type">${typeSlot.type.name}</li>`)
+}
+
 //converter pokemon para HTML
 function convertPokemonToHtml(pokemon){
     return `
         <li class="pokemon">
-            <span class="number">#001</span>
+            <span class="number">#${pokemon.order}</span>
             <span class="name">${pokemon.name}</span>
             <div class="detail">
                 <ol class="types">
-                    <li class="type">grass</li>
-                    <li class="type">poison</li>
+                    ${convertPokemonTypesToLi(pokemon.types).join('')}
                 </ol>
-                <img src="https://upload.wikimedia.org/wikipedia/en/2/28/Pokémon_Bulbasaur_art.png" 
+                <img src="" 
                 alt="${pokemon.name}">
             </div>
         </li>
@@ -23,11 +27,11 @@ function convertPokemonToHtml(pokemon){
 pokeApi.getPokemons().then((pokemonList = []) => {
 
     //map -> transforma um elemento em outro elemento por meio de uma funcao de transformacao
+    //estamos usando o join para substituir o html antigo pelo novo (manipulando o html)
     pokeList.innerHTML += pokemonList.map(convertPokemonToHtml).join('')
 
         //separando os elementos da lista do codigo HTML
         // const listItems = []
-
         // for (let i = 0; i < pokemonList.length; i++) {
         //     const element = pokemonList[i]
         //     // console.log(convertPokemonToHtml(element))
