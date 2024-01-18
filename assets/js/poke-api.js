@@ -39,7 +39,7 @@ pokeApi.getPokemonDetail = (pokemonItem) => {
 }
 
 //retornar a manipulaçao da API feita pelo fetch
-pokeApi.getPokemons = (offset = 0, limit = 12) => {
+pokeApi.getPokemons = (offset, limit) => {
     const url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`
     return fetch(url)
     //encadeamento de then para callback, com arrow functions, simplificando o codigo

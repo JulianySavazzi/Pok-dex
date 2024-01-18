@@ -1,49 +1,52 @@
 //pegar os pokemons vindos da api, e adicionar no <ol> pelo id
 const pokeApiList = document.getElementById('pokeList')
 
-//converter pokemon type para <li>
-//function  convertPokemonTypesToLi(pokemonTypes) {
-//    return pokemonTypes.map((typeSlot) => `<li class="type">${typeSlot.type.name}</li>`)
-//}
+//id do botao para carregar mais pokemos -> loadMoreButton
+const loadMoreButton = document.getElementById('loadMoreButton')
 
-//converter pokemon para HTML
-function convertPokemonToHtml(pokemon){
-    return `
-        <li class="pokemon ${pokemon.type}">
-            <span class="number">#${pokemon.number}</span>
-            <span class="name">${pokemon.name}</span>
-            <div class="detail">
-                <ol class="types">
-                    ${pokemon.types.map((type) => `<li class="type ${type}">${type}</li>`).join('')}
-                </ol>
-                <img src="${pokemon.photo}"
-                alt="${pokemon.name}">
-            </div>
-        </li>
-    `
+const limit = 12
+let offset = 0
+
+
+function loadPokemonItems(offset, limit){
+
+    //usando o objeto pokeApi para manipular a API response
+    pokeApi.getPokemons(offset, limit).then((pokemonList = []) => {
+
+        //map -> transforma um elemento em outro elemento por meio de uma funcao de transformacao (converter pokemon para HTML)
+        //estamos usando o join para substituir o html antigo pelo novo (manipulando o html)
+        //depois concatenamos o html antigo com o novo
+
+        const newHtml = pokemonList.map((pokemon) => `
+            <li class="pokemon ${pokemon.type}">
+                <span class="number">#${pokemon.number}</span>
+                <span class="name">${pokemon.name}</span>
+                <div class="detail">
+                    <ol class="types">
+                        ${pokemon.types.map((type) =>
+                        `<li class="type ${type}">${type}</li>`).join('')}
+                    </ol>
+                    <img src="${pokemon.photo}"
+                    alt="${pokemon.name}">
+                </div>
+            </li>
+            `)
+        .join('')
+
+        pokeApiList.innerHTML += newHtml
+        })
+    .catch((error) => console.error(error))
+    //.finally(() => console.log('Requisição concluída!'))
 }
 
-//usando o objeto pokeApi para manipular a API response
-pokeApi.getPokemons().then((pokemonList = []) => {
+//pagina inicial com limit e offset declarados como padrao na const
+loadPokemonItems(offset, limit)
 
-    //map -> transforma um elemento em outro elemento por meio de uma funcao de transformacao
-    //estamos usando o join para substituir o html antigo pelo novo (manipulando o html)
-    pokeList.innerHTML += pokemonList.map(convertPokemonToHtml).join('')
-
-        //separando os elementos da lista do codigo HTML
-        // const listItems = []
-        // for (let i = 0; i < pokemonList.length; i++) {
-        //     const element = pokemonList[i]
-        //     // console.log(convertPokemonToHtml(element))
-        //     //acessar janela -> window
-        //     //document -> acessar documento HTML atual 
-        //     //innerHTML -> concatenar o codigo html passado por string com a pagina
-        //     // pokeApiList.innerHTML += convertPokemonToHtml(element) -> concatena cada elemento da lista, browse precisa recarregar a lista inteira varias vezes
-        //     //é melhor concatenar tudo de uma vez, em vez de concatenar cada objeto da lista
-        //     listItems.push(convertPokemonToHtml(element))
-        // }
+//carregar mais pokemons quando clicar no botao
+loadMoreButton.addEventListener('click', () => {
+    offset += limit
+    loadPokemonItems(offset, limit)
+    console.log(offset)
 })
-.catch((error) => console.error(error))
-    //.finally(() => console.log('Requisição concluída!'))
 
     
