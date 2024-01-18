@@ -18,7 +18,7 @@ const pokeApi = {}
 function convertPokeApiDetailToModel(pokeDetail) {
     //pegando os atributos da API e colocando na nossa model
     const pokemon = new Pokemon()
-    pokemon.number = pokeDetail.order
+    pokemon.number = pokeDetail.id
     pokemon.name = pokeDetail.name
 
     const types = pokeDetail.types.map((typeSlot) => typeSlot.type.name)

@@ -4,9 +4,13 @@ const pokeApiList = document.getElementById('pokeList')
 //id do botao para carregar mais pokemos -> loadMoreButton
 const loadMoreButton = document.getElementById('loadMoreButton')
 
+//limit -> limita a quantidade de registros por pagina
+//se quisermos limitar a quantidade maxima de registros que a nossa aplicacao vai mostrar
+//temos que parar de mostrar o botao de carregar a pagina, quando o limit for maior do que o que estabelecemos
+//vou limitar na quantidade maxima de pokemons ate a nona geracao -> maxRecords = 1015
+const maxRecords = 1015
 const limit = 12
 let offset = 0
-
 
 function loadPokemonItems(offset, limit){
 
@@ -45,8 +49,23 @@ loadPokemonItems(offset, limit)
 //carregar mais pokemons quando clicar no botao
 loadMoreButton.addEventListener('click', () => {
     offset += limit
-    loadPokemonItems(offset, limit)
+    const qtdRecordsNextPage = offset + limit
+
     console.log(offset)
+
+    if (qtdRecordsNextPage >= maxRecords){
+        const newLimit = maxRecords - offset
+        loadPokemonItems(offset, newLimit)
+
+        //remover o botao de carregar pokemons quando chegar no limite maximo de pokemons
+        loadMoreButton.parentElement.removeChild(loadMoreButton)
+        console.log("remover botao")
+
+    } else {
+        loadPokemonItems(offset, limit)
+        console.log("carregar mais")
+    }
+
 })
 
     
